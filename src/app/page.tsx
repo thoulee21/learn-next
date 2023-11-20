@@ -2,6 +2,7 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Container, FloatingLabel, Form, ListGroup, Navbar, Pagination, Spinner } from 'react-bootstrap';
 
@@ -56,6 +57,13 @@ function Page() {
       <Navbar variant='dark' bg='dark'>
         <Container>
           <Navbar.Brand>Pokemon</Navbar.Brand>
+          <Navbar.Collapse className='justify-content-end'>
+            <Navbar.Text>
+              <Link href='/about'>
+                About
+              </Link>
+            </Navbar.Text>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
 
