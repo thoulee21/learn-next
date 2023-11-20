@@ -1,6 +1,7 @@
 'use client'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styles/global.css';
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -21,10 +22,12 @@ interface Pokemon {
 function Page() {
   const [datas, setDatas] = useState([] as Array<Pokemon>);
   const [showDatas, setShowDatas] = useState([] as Array<Pokemon>);
-  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=17');
+
+  const [page, setPage] = useState(0);
   const [prev, setPrev] = useState('' as string | null);
   const [next, setNext] = useState('' as string | null);
-  const [page, setPage] = useState(0);
+
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=17');
 
   const onSearch = (e: any) => {
     const value: string = e.target.value;
