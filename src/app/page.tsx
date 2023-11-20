@@ -27,7 +27,7 @@ function Page() {
   const [prev, setPrev] = useState('' as string | null);
   const [next, setNext] = useState('' as string | null);
 
-  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=17');
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=14');
 
   const onSearch = (e: any) => {
     const value: string = e.target.value;
@@ -89,10 +89,10 @@ function Page() {
         <ListGroup >
           {showDatas.map((item) => {
             return (
-              <ListGroup.Item
-                key={item.url}
-              >
-                {item.name}
+              <ListGroup.Item key={item.url}>
+                <a href={item.url}>
+                  {item.name}
+                </a>
               </ListGroup.Item>
             )
           })}
