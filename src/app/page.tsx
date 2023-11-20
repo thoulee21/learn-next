@@ -2,8 +2,15 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
-import { Container, FloatingLabel, Form, ListGroup, Navbar } from 'react-bootstrap';
+import { Container, FloatingLabel, Form, ListGroup, Navbar, Pagination, Spinner } from 'react-bootstrap';
 import './page.module.css';
+
+const styles = {
+  centerPaging: {
+    display: 'flex',
+    justifyContent: 'center',
+  }
+}
 
 interface Pokemon {
   name: string;
@@ -13,19 +20,15 @@ interface Pokemon {
 function Page() {
   const [datas, setDatas] = useState([] as Array<Pokemon>);
   const [showDatas, setShowDatas] = useState([] as Array<Pokemon>);
-
-  const getData = () => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setDatas(data.results)
-        setShowDatas(data.results)
-      });
-  }
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/');
+  const [prev, setPrev] = useState('' as string | null);
+  const [next, setNext] = useState('' as string | null);
+  const [page, setPage] = useState(0);
 
   const onSearch = (e: any) => {
-    const value = e.target.value;
+    const value: string = e.target.value;
     let filtered = [];
+
     if (value !== '') {
       filtered = datas.filter((item) => {
         return item.name.includes(value);
@@ -37,8 +40,16 @@ function Page() {
   }
 
   useEffect(() => {
-    getData();
-  }, []);
+    console.debug(url);
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setPrev(data.previous);
+        setNext(data.next);
+        setDatas(data.results)
+        setShowDatas(data.results)
+      });
+  }, [url]);
 
   return (
     <div>
@@ -47,6 +58,7 @@ function Page() {
           <Navbar.Brand>Pokemon</Navbar.Brand>
         </Container>
       </Navbar>
+
       <Container>
         <FloatingLabel label='Search'>
           <Form.Control
@@ -56,6 +68,7 @@ function Page() {
             placeholder='Search'
           />
         </FloatingLabel>
+
         <ListGroup >
           {showDatas.map((item) => {
             return (
@@ -67,7 +80,32 @@ function Page() {
             )
           })}
         </ListGroup>
+
+        <Container style={{ visibility: showDatas.length !== 0 ? 'visible' : 'hidden' }}>
+          <hr />
+          <Pagination style={styles.centerPaging}>
+            <Pagination.Prev onClick={() => {
+              if (prev) {
+                setUrl(prev);
+                setPage(page - 1);
+              }
+            }} />
+            <Pagination.Item active>{page + 1}</Pagination.Item>
+            <Pagination.Next onClick={() => {
+              if (next) {
+                setUrl(next);
+                setPage(page + 1);
+              }
+            }} />
+          </Pagination>
+        </Container>
       </Container>
+
+      <Spinner animation='grow' role='status' style={{
+        display: 'block',
+        margin: '10px auto 10px auto', // 上 右 下 左
+        visibility: showDatas.length === 0 ? 'visible' : 'hidden',
+      }} />
     </div>
   );
 }
