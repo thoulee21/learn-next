@@ -1,9 +1,9 @@
 'use client'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { useEffect, useState } from 'react';
 import { Container, FloatingLabel, Form, ListGroup, Navbar, Pagination, Spinner } from 'react-bootstrap';
-import './page.module.css';
 
 const styles = {
   centerPaging: {
@@ -20,7 +20,7 @@ interface Pokemon {
 function Page() {
   const [datas, setDatas] = useState([] as Array<Pokemon>);
   const [showDatas, setShowDatas] = useState([] as Array<Pokemon>);
-  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/');
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=17');
   const [prev, setPrev] = useState('' as string | null);
   const [next, setNext] = useState('' as string | null);
   const [page, setPage] = useState(0);
@@ -60,7 +60,13 @@ function Page() {
       </Navbar>
 
       <Container>
-        <FloatingLabel label='Search'>
+        <FloatingLabel
+          label='Search'
+          style={{
+            marginTop: '10px',
+            marginBottom: '10px'
+          }}
+        >
           <Form.Control
             type='text'
             id='scerchText'
@@ -81,7 +87,9 @@ function Page() {
           })}
         </ListGroup>
 
-        <Container style={{ visibility: showDatas.length !== 0 ? 'visible' : 'hidden' }}>
+        <Container
+          hidden={!(datas.length !== 0 && showDatas.length !== 0)}
+        >
           <hr />
           <Pagination style={styles.centerPaging}>
             <Pagination.Prev onClick={() => {
@@ -101,11 +109,25 @@ function Page() {
         </Container>
       </Container>
 
-      <Spinner animation='grow' role='status' style={{
-        display: 'block',
-        margin: '10px auto 10px auto', // 上 右 下 左
-        visibility: showDatas.length === 0 ? 'visible' : 'hidden',
-      }} />
+      <Spinner
+        animation='grow'
+        role='status'
+        style={{
+          display: 'block',
+          margin: '50px auto 10px auto', // 上 右 下 左
+        }}
+        hidden={datas.length !== 0}
+      />
+
+      <p
+        style={{
+          textAlign: 'center',
+          marginTop: '50px',
+        }}
+        hidden={!(showDatas.length === 0 && datas.length !== 0)}
+      >
+        :(<br />No matching Pokemon
+      </p>
     </div>
   );
 }
