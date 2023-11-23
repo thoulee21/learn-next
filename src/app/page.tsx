@@ -44,7 +44,6 @@ function Page() {
   }
 
   useEffect(() => {
-    console.debug(url);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -80,7 +79,6 @@ function Page() {
         >
           <Form.Control
             type='text'
-            id='scerchText'
             onChange={onSearch}
             placeholder='Search'
           />
