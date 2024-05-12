@@ -24,7 +24,7 @@ export default function About() {
                     >
                         By{' '}
                         <Image
-                            src="/vercel.svg"
+                            src="/nextjs-github-pages/vercel.svg"
                             alt="Vercel Logo"
                             className={styles.vercelLogo}
                             width={100}
@@ -38,7 +38,7 @@ export default function About() {
             <div className={styles.center}>
                 <Image
                     className={styles.logo}
-                    src="/next.svg"
+                    src="/nextjs-github-pages/next.svg"
                     alt="Next.js Logo"
                     width={180}
                     height={37}
