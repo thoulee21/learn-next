@@ -1,20 +1,22 @@
 'use client'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../styles/global.css';
+import styles from './page.module.css'
+import '@/app/globals.css'
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Container, FloatingLabel, Form, ListGroup, Navbar, Pagination, Spinner } from 'react-bootstrap';
+import {
+  Container,
+  FloatingLabel,
+  Form,
+  ListGroup,
+  Navbar,
+  Pagination,
+  Spinner
+} from 'react-bootstrap';
 
-const styles = {
-  centerPaging: {
-    display: 'flex',
-    justifyContent: 'center',
-  }
-}
-
-interface Pokemon {
+export interface Pokemon {
   name: string;
   url: string;
 }
@@ -100,7 +102,7 @@ function Page() {
           hidden={!(datas.length !== 0 && showDatas.length !== 0)}
         >
           <hr />
-          <Pagination style={styles.centerPaging}>
+          <Pagination className={styles.paging}>
             <Pagination.Prev onClick={() => {
               if (prev) {
                 setUrl(prev);

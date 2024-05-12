@@ -1,9 +1,10 @@
 'use client'
 
+import styles from './page.module.css';
+// import '@/app/globals.css'
+
 import Image from 'next/image';
 import Link from 'next/link';
-import '../src/app/globals.css';
-import styles from '../src/app/page.module.css';
 
 export default function About() {
     return (
